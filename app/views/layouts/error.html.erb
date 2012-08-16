@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+    Grindars' blog
+  </title>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span2">
+        </div>
+        
+        <div class="span8">
+            <%= yield %>
+        </div>
+        
+        <div class="span2">
+        </div>
+    </div>
+    
+    <hr />
+    
+    <footer>
+        <p>Copyright &copy; 2012 <a href="mailto:grindars@gmail.com">Sergey Gridasov</a>.</p>
+    </footer>    
+</div>
+
+</body>
+</html>

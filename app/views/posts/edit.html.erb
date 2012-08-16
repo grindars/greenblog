@@ -1,0 +1,5 @@
+<% title "Edit post" %>
+<% add_breadcrumb "Posts", :posts_path %>
+<% add_breadcrumb @post.title, post_path(@post) %>
+
+<%= render 'form' %>

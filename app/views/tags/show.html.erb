@@ -1,0 +1,29 @@
+<% title @tag.name %>
+<% add_breadcrumb "Tags", :tags_path %>
+
+<div class="page-header">
+    <h1><%= title %></h1>
+</div>
+
+<% if can?(:update, Tag) || can?(:destroy, Tag) %>
+<%= form_for @tag, :method => :delete, :html => { :class => 'pull-right',
+    :onsubmit => 'return Greenblog.confirm(this, { title: "Delete tag", text: "Are you sure?", yesClass: "btn btn-danger" })' } do |f| %>
+    
+    <div class="btn-group">
+    <% if can?(:update, User) %>
+            <input type="button" class="btn" onclick="location.href='<%= h edit_tag_path(@tag)%>'" value="Edit" />
+    <% end %>
+    <% if can?(:destroy, User) %>
+            <%= f.submit 'Delete', :class => "btn btn-danger" %>
+    <% end %>
+    </div>
+<% end %>
+<% end %>
+
+<p><%= link_to "RSS feed", :action => :feed, :format => :rss %></p>
+
+<% @posts.each do |post| %>
+<%= render 'posts/post', :post => post, :is_brief => true %>
+<% end %>
+
+<%= will_paginate @posts, :renderer => BootstrapPaginationRenderer %>

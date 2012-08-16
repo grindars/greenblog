@@ -1,0 +1,36 @@
+<% title "Edit registration" %>
+
+<%= formalwear_form_for resource, :as => resource_name, :url => registration_path(resource_name), 
+    :html => { :method => :put, :class => "form-horizontal" } do |f| %>
+
+    <%= f.fieldset title do %>
+        <%= f.email_field_group :email %>
+        <%= f.text_field_group :nickname %>
+        <%= f.group :password do %>
+            <%= f.password_field :password, :autocomplete => "off" %>
+            <p class="help-block">Leave blank if you don't want to change it</p>
+        <% end %>
+        <%= f.password_field_group :password_confirmation %>
+        <%= f.group :current_password do %>
+            <%= f.password_field :current_password, :autocomplete => "off" %>
+            <p class="help-block">We need your current password to confirm your changes</p>
+        <% end %>
+    <% end %>
+    
+    <%= f.actions do %>
+        <%= f.submit "Update" %>
+    <% end %>
+<% end %>
+    
+<%= formalwear_form_for resource, :as => resource_name, :url => registration_path(resource_name),
+    :html => { :method => :delete, :id => "cancel_account_form", :onsubmit => 'return Greenblog.confirm(this, { title: "Cancel account", text: "Are you sure?", yesClass: "btn btn-danger" })' } do |f| %>
+    
+    <%= f.fieldset "Cancel account" do %>
+        <p>You can remove your account with all your comments and other associated information.</p>
+        <p>However, please note that this operation cannot be cancelled.</p>
+    <% end %>
+    
+    <%= f.actions do %>
+        <%= f.submit "Cancel my account", :class => "btn btn-danger" %>
+    <% end %>   
+<% end %>

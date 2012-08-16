@@ -1,0 +1,21 @@
+<% title "Edit" %>
+<% add_breadcrumb "Users", :users_path %>
+<% add_breadcrumb @user.nickname, user_path(@user) %>
+
+<%= formalwear_form_for @user, :html => { :class => "form-horizontal" } do |f| %>
+    <%= f.fieldset title do %>  
+        <%= f.email_field_group :email %>
+        <%= f.password_field_group :password %>
+        <%= f.text_field_group :nickname %>
+        
+        <%= f.group do %>
+            <label for="user_is_admin" class="checkbox">
+                <%= f.check_box :is_admin %> Is admin
+            </label>
+        <% end %>
+    <% end %>
+    
+    <%= f.actions do %>
+        <%= f.submit "Save" %>
+    <% end %>
+<% end %>

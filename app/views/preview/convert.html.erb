@@ -1,0 +1,5 @@
+<% unless @title.nil? %>
+<div class="page-header"><h1><%= @title %></h1></div>
+<% end %>
+
+<%= markdown_to_html @body %>

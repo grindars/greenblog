@@ -1,0 +1,8 @@
+<%= formalwear_form_for @tag, :html => { :class => "form-horizontal" } do |f| %>
+    <%= f.fieldset title do %>
+        <%= f.text_field_group :name %>
+    <% end %>
+    <%= f.actions do %>
+        <%= f.submit "Save" %>
+    <% end %>
+<% end %>

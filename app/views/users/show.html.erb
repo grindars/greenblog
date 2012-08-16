@@ -1,0 +1,72 @@
+<% title @user.nickname %>
+<% add_breadcrumb "Users", :users_path %>
+
+<div class="page-header">
+    <h1><%= @user.nickname %></h1>
+</div>
+
+<% if can?(:update, User) || can?(:destroy, User) %>
+<%= form_for @user, :method => :delete, :html => { :class => 'pull-right',
+    :onsubmit => 'return Greenblog.confirm(this, { title: "Delete user", text: "Are you sure?", yesClass: "btn btn-danger" })' } do |f| %>
+    
+    <div class="btn-group">
+    <% if can?(:update, User) %>
+            <input type="button" class="btn" onclick="location.href='<%= h edit_user_path(@user)%>'" value="Edit" />
+    <% end %>
+    <% if can?(:destroy, User) %>
+            <%= f.submit 'Delete', :class => "btn btn-danger" %>
+    <% end %>
+    </div>
+<% end %>
+<% end %>
+    
+
+<table class="table">
+    <tbody>
+        <tr>
+            <th>ID:</th>
+            <td><%= @user.id %></td>
+        </tr>
+        <tr>
+            <th>E-Mail:</th>
+            <td><%= @user.email %></td>
+        </tr>
+        <tr>
+            <th>Nickname:</th>
+            <td><%= @user.nickname %></td>
+        </tr>
+        <tr>
+            <th>Role:</th>
+            <td><%= @user.is_admin ? "Admin" : "User" %></td>
+        </tr>
+        <tr>
+            <th>Sign in count:</th>
+            <td><%= @user.sign_in_count %></td>
+        </tr>        
+        <tr>
+            <th>Current sign in:</th>
+            <td><%= @user.current_sign_in_at %></td>
+        </tr>       
+        <tr>
+            <th>Last sign in:</th>
+            <td><%= @user.last_sign_in_at %></td>
+        </tr>
+        <tr>
+            <th>Current sign in IP:</th>
+            <td><%= @user.current_sign_in_ip %></td>
+        </tr>       
+        <tr>
+            <th>Last sign in IP:</th>
+            <td><%= @user.last_sign_in_ip %></td>
+        </tr> 
+        <tr>
+            <th>Created:</th>
+            <td><%= @user.created_at %></td>
+        </tr>       
+        <tr>
+            <th>Updated:</th>
+            <td><%= @user.updated_at %></td>
+        </tr>         
+    </tbody>
+</table>
+    

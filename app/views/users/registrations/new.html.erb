@@ -1,0 +1,18 @@
+<% title 'Sign up' %>
+<% add_breadcrumb "Sign in", session_path(resource_name) %>
+
+<%= formalwear_form_for resource, :as => resource_name, :url => registration_path(resource_name), 
+    :html => { :class => "form-horizontal" } do |f| %>
+    <%= f.fieldset title, :class => 'sign_up' do %>
+        <%= f.email_field_group :email %>
+        <%= f.text_field_group :nickname %>
+        <%= f.password_field_group :password %>
+        <%= f.password_field_group :password_confirmation %>
+    <% end %>
+    
+    <%= f.actions do %>
+        <%= f.submit title %>
+    <% end %>
+<% end %>
+
+<%= render "devise/shared/links" %>

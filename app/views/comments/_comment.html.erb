@@ -1,0 +1,21 @@
+<div class="comment" id="comment_<%= comment.id %>">
+    <div class="comment-heading">
+        <%= comment.user.nickname %>, <%= l comment.created_at, :format => :long %>:
+    </div>
+    
+    <% if can?(:destroy, comment) || can?(:edit, comment) %>
+        <%= form_for :comment, :url => post_comment_path(comment.post, comment), :html => { :class => "pull-right", :method => :delete,
+            :onsubmit => 'return Greenblog.confirm(this, { title: "Delete comment", text: "Are you sure?", yesClass: "btn btn-danger" })' } do |f| %>
+            <span class="btn-group">
+                <input type="button" value="Edit" onclick="location.href = '<%= edit_post_comment_path(comment.post, comment) %>'" class ="btn" />
+                <%= f.submit "Delete", :class => "btn btn-danger" %>
+            </span>
+        <% end %>
+    <% end %>
+    
+    <div class="comment-body">
+        <%= markdown_to_html comment.body %>
+    </div>
+</div>
+
+<hr />

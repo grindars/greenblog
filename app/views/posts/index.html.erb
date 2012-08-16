@@ -1,0 +1,9 @@
+<% if can?(:create, Post) %>
+    <%= link_to 'New', new_post_path, :class => "btn pull-right btn-success" %>
+<% end %>
+
+<% @posts.each do |post| %>
+<%= render 'post', :post => post, :is_brief => true %>
+<% end %>
+
+<%= will_paginate @posts, :renderer => BootstrapPaginationRenderer %>

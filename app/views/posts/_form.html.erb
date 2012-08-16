@@ -1,0 +1,20 @@
+<%= formalwear_form_for @post, :html => { :class => "form-horizontal" } do |f| %>
+    <%= f.fieldset title do %>    
+        <%= f.text_field_group :title, :class => 'input-xxlarge'  %>
+        <%= f.text_area_group :body, :class => 'input-xxlarge' %>
+        <%= f.group do %>
+            <label for="post_published" class="checkbox">
+                <%= f.check_box :published %> Published
+            </label>
+        <% end %>
+        <%= f.text_field_group :tags_list, "Tags" %>
+    <% end %>
+    
+    <%= f.actions do %>
+        <%= f.submit "Save" %>
+        <%= f.button "Preview", :onclick => "Greenblog.previewMarkup(this.form, document.getElementById('post_preview'))" %>
+    <% end %>
+<% end %>
+
+<div id="post_preview">
+</div>

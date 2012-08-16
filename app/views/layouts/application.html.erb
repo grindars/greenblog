@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+    <% if title? %>
+        <%= title %> ::
+    <% end %>
+    Grindars' blog
+  </title>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+       
+<%
+    management = {}
+    
+    management[users_path] = "Users" if can? :view, User
+    management[tags_path] = "Tags" if can?(:create, Tag) || can?(:update, Tag) || can?(:destroy, Tag)
+    
+    navbar = {
+        "RSS"    => url_for(:controller => "/posts", :action => :feed, :format => :rss),
+        "github" => "https://github.com/grindars"
+    }
+%>    
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+        
+            <div class="brand">
+                <%= link_to "Grindars' blog", posts_path %>
+            </div>            
+            
+            <div class="btn-group pull-right">
+                <% if user_signed_in? %>
+                    <div class="btn dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-user"></i>
+                        <%= current_user.nickname %>
+                        <span class="caret"></span>
+                    </div>
+                    <ul class="dropdown-menu hide">
+                        <li><%= link_to "Edit registration", edit_user_registration_path %></li>
+                        <li><%= link_to "Logout", destroy_user_session_path, :method => :delete %></li>
+                    </ul>
+                    
+                <% else %>
+                    <a class="btn" href="<%= new_user_session_path %>">
+                        Sign in
+                    </a>
+                <% end %>
+            </div>            
+
+            
+            <div class="nav-collapse">
+                <ul class="nav">
+<%
+navbar.each do |title, options| 
+    if current_page?(options)
+%>
+                    <li class="active"><a><%= title %></a></li>
+    <% else %>                    
+                    <li><%= link_to title, options %></li>
+    <% end %>
+<% end %>    
+                </ul>
+            </div>     
+            
+            <%= form_for :search, :url => url_for(:controller => "/posts", :action => :search), :html => { :class => "navbar-search pull-right", :method => :get } do |f| %>
+                <%= f.text_field :query, :class => "search-query", :placeholder => "Search" %>
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+<%
+{
+    :alert  => "alert-error",
+    :notice => "alert-success"
+}.each do |type, class_name|
+
+    if flash[type]
+%>
+    <div class="alert <%= class_name %> fade in">
+        <button class="close" data-dismiss="alert" type="button">&times;</button>
+        
+        <%= flash[type] %>
+    </div>
+<%
+    end
+end
+%>
+    <% if title? %>
+        <ul class="breadcrumb"><%= render_breadcrumbs :builder => BootstrapBreadcrumbBuilder %><li class="active"><%= title %></li></ul>
+    <% end %>
+    
+    <div class="row-fluid">
+        <div class="span9">
+            <%= yield %>
+        </div>      
+        <div class="span3">
+            <div class="well sidebar-nav">
+                <ul class="nav nav-list">
+                    <li class="nav-header">Recent posts</li>
+<% recent_posts.each do |post| %>
+                    <li><%= link_to post.title, post %></li>
+<% end %>
+                    <li class="nav-header">Other stuff</li>
+                    <li><a href="http://ingenic.grindars.org/">Linux builds for Ingenic SoC</a></li>
+                    <li class="nav-header">You should also read</li>
+                    <li><a href="http://whitequark.org">whitespace</a></li>
+<% unless management.empty? %>
+                    <li class="nav-header">Management</li>
+<% management.each do |url, text| %>
+                    <li><a href="<%= h url %>"><%= text %></a></li>
+<% end %>           
+<% end %>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+    
+    <footer>
+        <p>Copyright &copy; 2012 <a href="mailto:grindars@gmail.com">Sergey Gridasov</a>.</p>
+    </footer>
+</div>
+
+</body>
+</html>

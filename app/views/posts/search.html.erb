@@ -1,0 +1,8 @@
+<% title "Search results for #{@query}" %>
+<% add_breadcrumb "Posts", :posts_path %>
+
+<% @posts.each do |post| %>
+<%= render 'post', :post => post, :is_brief => true %>
+<% end %>
+
+<%= will_paginate @posts, :renderer => BootstrapPaginationRenderer %>

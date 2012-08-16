@@ -1,0 +1,23 @@
+<%
+errors = {
+    403 => {
+        :title => "Forbidden",
+        :description => "You don't have permission to access this page."
+    },
+    
+    404 => {
+        :title => "Not Found",
+        :description => "The page you were looking for doesn't exist."
+    },
+    
+    500 => {
+        :title => "Internal Server Error",
+        :description => "We're sorry, but something went wrong."
+    }
+}
+%>
+
+<div class="hero-unit">
+    <h1><%= errors[@code][:title] %></h1>
+    <p><%= errors[@code][:description] %></p>
+</div>

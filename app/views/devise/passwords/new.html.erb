@@ -1,0 +1,17 @@
+<% title "Forgot your password?" %>
+<% add_breadcrumb "Sign in", session_path(resource_name) %>
+
+<%= formalwear_form_for resource, :as => resource_name, :url => password_path(resource_name), 
+    :html => { :class => "form-horizontal" } do |f| %>
+    
+    <%= f.fieldset title do %>
+        <%= f.email_field_group :email %>
+    <% end %>
+    
+    <%= f.actions do %>
+        <%= f.submit "Send me reset password instructions" %>
+    <% end %>
+  
+<% end %>
+
+<%= render "devise/shared/links" %>

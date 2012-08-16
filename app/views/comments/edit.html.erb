@@ -1,0 +1,5 @@
+<% title "Edit comment" %>
+<% add_breadcrumb "Posts", :posts_path %>
+<% add_breadcrumb @comment.post.title, post_path(@comment.post) %>
+
+<%= render 'form' %>

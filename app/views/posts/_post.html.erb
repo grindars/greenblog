@@ -1,0 +1,31 @@
+<div class="post" id="post_<%= post.id %>">
+    <div class="post-timestamp">
+        <%= l post.created_at, :format => :long %>
+    </div>
+
+    <div class="page-header">
+        <h1>
+            <% if is_brief %>
+                <%= link_to post.title, post %>
+            <% else %>
+                <%= post.title %>
+            <% end %>
+<% unless post.published %>
+            <small>(not published)</small>
+<% end %>
+        </h1>
+    </div>
+    
+    <div class="post-tags pull-right">
+        Tags:    
+<% post.tags.each do |tag| %>
+        <%= link_to tag.name, tag, :class => "label label-info" %>
+<% end %>        
+    </div>
+    
+    <div class="post-body">
+        <%= markdown_to_html(post.body, is_brief ? url_for(post) : nil) %>
+    </div>
+</div>
+
+<hr />

@@ -1,0 +1,47 @@
+<% title @post.title %>
+<% add_breadcrumb "Posts", :posts_path %>
+
+<% if can?(:update, Post) || can?(:destroy, Post) %>
+<%= form_for @post, :method => :delete, :html => { :class => 'pull-right', 
+    :onsubmit => 'return Greenblog.confirm(this, { title: "Delete post", text: "Are you sure?", yesClass: "btn btn-danger" })' } do |f| %>
+    
+    <div class="btn-group">
+<% if can?(:update, Post) %>
+        <input type="button" class="btn" onclick="location.href='<%= h edit_post_path(@post)%>'" value="Edit" />
+<% end %>
+<% if can?(:destroy, Post) %>
+        <%= f.submit 'Delete', :class => "btn btn-danger" %>
+<% end %>        
+    </div>
+<% end %>  
+
+<% end %>
+
+<%= render 'post', :post => @post, :is_brief => false %>
+
+<h2>Comments</h2>
+<% unless user_signed_in? %>
+    <p>Only registered users can leave comments. <%= link_to "Sign in", new_user_session_path %> or <%= link_to "sign up", new_user_registration_path %>.</p>
+<% else %>
+    <% new_comment = @failed_comment || Comment.new %>
+
+    <%= formalwear_form_for new_comment, :url => post_comments_path(@post), :html => { :class => "form-horizontal", :id => "comment_form" } do |f| %>       
+        <%= f.fieldset "New comment" do %>
+            <%= f.text_area_group :body, "Comment", :class => "input-xxlarge", :rows => 4 %>
+        <% end %>
+        
+        <%= f.actions do %>
+            <%= f.submit "Post" %>
+            <%= f.button "Preview", :onclick => "Greenblog.previewMarkup(this.form, document.getElementById('comment_preview'))" %>
+        <% end %>
+    <% end %>
+<% end %>
+
+<div id="comment_preview">
+</div>
+
+<% @comments.each do |comment| %>
+<%= render 'comments/comment', :comment => comment %>
+<% end %>
+
+<%= will_paginate @comments, :renderer => BootstrapPaginationRenderer %>

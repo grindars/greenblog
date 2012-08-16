@@ -1,0 +1,29 @@
+@import "bootstrap";
+
+body {
+    padding: 60px 0;
+}
+
+.sidebar-nav.well {
+    padding: 9px 0;
+}
+    
+.comment {
+    padding: 0 0 30px 30px;
+}
+
+.comment-heading {
+    padding: 0 0 10px 0;
+    font-size: 0.9em;
+    font-variant: small-caps;
+}
+
+.comment-body {
+    padding: 0 0 0 10px;
+}
+
+.post-timestamp {
+    font-variant: small-caps;
+}
+    
+@import "bootstrap-responsive";

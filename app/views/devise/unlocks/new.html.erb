@@ -1,0 +1,14 @@
+<% title "Resend unlock instructions" %>
+
+<%= formalwear_form_for resource, :as => resource_name, :url => unlock_path(resource_name), 
+    :html => { :class => "form-horizontal" } do |f| %>
+    <%= f.fieldset title do %>
+        <%= f.email_field_group :email %>
+    <% end %>
+    
+    <%= f.actions do %>
+        <%= f.submit title %>
+    <% end %>
+<% end %>
+
+<%= render "devise/shared/links" %>
